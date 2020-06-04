@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    AgmCoreModule.forRoot( {apiKey: 'INSERISCI_LA_TUA_API_KEY'} )
+    AgmCoreModule.forRoot( {apiKey: 'AIzaSyB6mXdlANO54DFjxLwxFfLJRcbHW8SrdoQ'} )
 
   ],
   providers: [],
