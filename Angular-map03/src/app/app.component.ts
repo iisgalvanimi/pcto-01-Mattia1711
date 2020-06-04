@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { GEOJSON, GeoFeatureCollection } from './models/geojson.model';
 import { Marker } from './models/marker.model';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-root',
@@ -24,7 +27,7 @@ export class AppComponent implements OnInit {
     this.geoJsonObject = GEOJSON;
     console.log(this.geoJsonObject); //stampo l'oggetto geoJsonObject sulla console
     //Provo a visualizzare le coordinate della prima features
-    //console.log(?????); 
+    //console.log(?????);
   }
 
 
@@ -73,7 +76,7 @@ export class AppComponent implements OnInit {
       }
 
       this.markers.push(m);
-     
+
   }
 }
 
