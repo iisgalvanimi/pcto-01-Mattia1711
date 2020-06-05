@@ -4,6 +4,7 @@ import { Marker } from './models/marker.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+import { Ci_vettore } from './models/ci_vettore.model';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,7 @@ export class AppComponent implements OnInit {
   zoom: number = 16;
   geoJsonObject: GeoFeatureCollection; //Oggetto che conterrà il vettore di GeoJson
   fillColor: string = "#FF0000";  //Colore delle zone catastali
-  markers: Marker[]=[];  //Vettore con tutti i marker
+  //markers: Marker[]=[];  //Vettore con tutti i marker
 
   lng: number = 9.191158;
   lat: number = 45.506521;
@@ -42,26 +43,20 @@ export class AppComponent implements OnInit {
       strokeWeight: 1
     });
   }
+    obsCiVett : Observable<Ci_vettore[]>; //Crea un observable per ricevere i vettori energetici
+    markers : Marker[] //Marker va importato
 
-  ngOnInit_old() {
-    this.markers = [
-      {
-        //features[0] seleziona il primo geoJson
-        //coordinates[0] ottiene la lista di poligoni.
-        //coordinates[0][0] ottiene il primo (e unico) poligono della lista
-        //coordinates[0][0][0] ottiene la longitudine
-        //coordinates[0][0][1] ottiene la latitudine
-        lng: this.geoJsonObject.features[0].geometry.coordinates[0][0][0],
-        lat: this.geoJsonObject.features[0].geometry.coordinates[0][0][1],
-        label: String(this.geoJsonObject.features[0].properties.id),
-      },
-      {
-        lng: this.geoJsonObject.features[1].geometry.coordinates[0][0][0],
-        lat: this.geoJsonObject.features[1].geometry.coordinates[0][0][1],
-        label: String(this.geoJsonObject.features[1].properties.id),
-      }
-    ]
-  }
+ prepareCiVettData = (data: Ci_vettore[]) =>
+  {
+    console.log(data); //Verifica di ricevere i vettori energetici
+    this.markers = []; //NB: markers va dichiarata tra le proprietà markers : Marker[]
+    for (const iterator of data) { //Per ogni oggetto del vettore crea un Marker
+     let m = new Marker(iterator.WGS84_X,iterator.WGS84_Y,iterator.CI_VETTORE);
+      this.markers.push(m);
+
+    }
+ }
+
 
 
   ngOnInit() {
@@ -75,7 +70,7 @@ export class AppComponent implements OnInit {
         label: String(f.properties.id)
       }
 
-      this.markers.push(m);
+
 
   }
 }
